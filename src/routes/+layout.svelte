@@ -1,3 +1,7 @@
+<script>
+	import '../app.pcss';
+</script>
+
 <div class="main-content">
 	<slot></slot>
 </div>

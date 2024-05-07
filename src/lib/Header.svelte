@@ -2,12 +2,12 @@
 </script>
 
 <header>
-	<h1>LunchKampen</h1>
+	<a href="/">LunchKampen</a>
 	<nav>
 		<ul>
-			<li><a href="/">Hem</a></li>
-			<li><a href="/about">Om oss</a></li>
-			<li><a href="/contact">Kontakt</a></li>
+			<li><a href="/game">Spela</a></li>
+			<li><a href="/stats">Statistik</a></li>
+			<li><a href="/record_scores">Registrera poäng</a></li>
 			<li><a href="/login">Logga in</a></li>
 		</ul>
 	</nav>
@@ -17,10 +17,13 @@
 	header {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: stretch;
 		padding: 1rem;
-		background-color: #333;
-		color: white;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 10;
+		view-transition-name: header;
 	}
 
 	nav ul {
@@ -33,7 +36,6 @@
 	}
 
 	nav ul li a {
-		color: white;
 		text-decoration: none;
 	}
 </style>

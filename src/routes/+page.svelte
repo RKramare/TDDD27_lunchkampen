@@ -5,6 +5,8 @@
 	import Modal from '$lib/Modal.svelte';
 	import Header from '$lib/Header.svelte';
 	import Footer from '$lib/Footer.svelte';
+	import GameSelector from '$lib/GameSelector.svelte';
+	import MainSelector from '$lib/MainSelector.svelte';
 
 	$: isLoggedIn = $user === null ? false : true;
 
@@ -14,7 +16,7 @@
 </script>
 
 <Header />
-<Card>
+<!-- <Card>
 	<h1>Välkommen te LunchKampen</h1>
 
 	{#if isLoggedIn}
@@ -23,15 +25,6 @@
 	{:else}
 		<Login />
 	{/if}
-</Card>
+</Card> -->
 
-<iframe src="https://contexto.me/" frameborder="3" title="Contexto"></iframe>
-<Footer />
-
-<style>
-	/* Add any necessary styling for your iframe */
-	.iframe {
-		width: 100%;
-		height: 400px; /* Set the desired height */
-	}
-</style>
+<MainSelector />

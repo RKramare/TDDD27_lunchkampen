@@ -1,5 +1,5 @@
 <footer>
-	<p>Footer</p>
+	<h1>Footer</h1>
 	<p>© 2021</p>
 	<p><a>adasdasdasd</a></p>
 </footer>
@@ -10,8 +10,8 @@
 		justify-content: center;
 		align-items: center;
 		padding: 1rem;
-		background-color: #333;
-		color: white;
+		/* background-color: #333;
+		color: white; */
 	}
 
 	footer p {
@@ -19,7 +19,7 @@
 	}
 
 	footer p a {
-		color: white;
+		/* color: white; */
 		text-decoration: none;
 	}
 
