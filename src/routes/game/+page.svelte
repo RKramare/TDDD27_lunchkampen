@@ -26,7 +26,6 @@
 </script>
 
 <Header />
-
 <GameSelector />
 
 {#if $selectedGame && gameInfo[$selectedGame].isEmbeded}
@@ -36,7 +35,7 @@
 {:else if $selectedGame}
 	<div style="display: flex; justify-content: center; align-items: center;">
 		<button class="variant-ghost-primary justify-center rounded p-2" on:click={openExternalPage}
-			>Open {gameInfo[$selectedGame].name}</button
+			>Öppna {gameInfo[$selectedGame].name} i en ny flik</button
 		>
 	</div>
 {/if}

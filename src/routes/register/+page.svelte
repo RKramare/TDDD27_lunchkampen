@@ -1,6 +1,6 @@
 <script>
 	import Header from '$lib/Header.svelte';
-	import Login from '$lib/Login.svelte';
+	import Register from '$lib/Register.svelte';
 	import { user } from '../../user.js';
 	import { logout } from '../../authentication.js';
 
@@ -20,6 +20,5 @@
 	<p>Du är inloggad som {currentUser.email}</p>
 	<button class="button" on:click={logout}>Logga ut</button>
 {:else}
-	<Login />
-	<a href="/register">Registrera nytt konto.</a>
+	<Register />
 {/if}

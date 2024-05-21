@@ -2,9 +2,12 @@
 	import Header from '$lib/Header.svelte';
 	import { readScores } from '../../firestore';
 
-	let scores = []; // Initialize scores as an empty array
+	/**
+	 * Initialize scores as an empty array
+	 * @type {string | any[]}
+	 */
+	let scores = [];
 
-	// Call the asynchronous function and update scores when it resolves
 	readScores().then((data) => {
 		scores = data; // Update scores with the data from the asynchronous function
 	});

@@ -1,5 +1,10 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
 
-const user = writable(null);
+/**
+ * @typedef {import('firebase').auth.User} User
+ */
 
-export default user;
+/**
+ * @type {import('svelte/store').Writable<User|null>}
+ */
+export const user = writable(null);

@@ -24,6 +24,9 @@ const storeScores = async (
 
 const readScores = async () => {
     // Get a list of scores
+    /**
+     * @type {import("@firebase/firestore").DocumentData[]}
+     */
     const scores = [];
     const querySnapshot = await getDocs(collection(db, "scores"));
     querySnapshot.forEach((doc) => {
@@ -32,5 +35,22 @@ const readScores = async () => {
     return scores;
 };
 
+const storeUser = async (
+    /** @type {string} */ uid,
+    /** @type {string} */ email,
+    /** @type {string} */ name
+) => {
+    try {
+        const docRef = await addDoc(collection(db, "users"), {
+            uid: uid,
+            email: email,
+            name: name,
+        });
+        console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+};
+
 // Export the function
-export { storeScores, readScores };
+export { storeScores, readScores, storeUser };

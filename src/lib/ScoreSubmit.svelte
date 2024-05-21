@@ -10,8 +10,8 @@
 </script>
 
 <form on:submit|preventDefault={submitScore}>
-	<nav class="flex size-2">
-		<div class="flex items-center">
+	<div class="flex items-center space-x-4 pt-5">
+		<div class="flex items-baseline">
 			<p class="mr-2">Points:</p>
 			<input
 				type="number"
@@ -20,22 +20,6 @@
 			/>
 		</div>
 		<StopWatch />
-		<button type="submit" class="ml-2">Submit</button>
-	</nav>
+		<button type="submit" class="variant-filled-primary btn ml-2 p-2">Submit</button>
+	</div>
 </form>
-
-<style>
-	nav {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: stretch;
-		padding: 1rem;
-		position: fixed;
-		bottom: 40px;
-		left: 0;
-		width: 100%;
-		z-index: 10;
-		view-transition-name: header;
-		box-sizing: border-box;
-	}
-</style>
