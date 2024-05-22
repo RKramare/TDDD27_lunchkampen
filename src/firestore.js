@@ -35,7 +35,16 @@ const readScores = async () => {
     return scores;
 };
 
-
+const readUserRole = async (/** @type {string} */ uid) => {
+    const userRoleDoc = await getDoc(doc(db, "roles", uid));
+    if (userRoleDoc.exists()) {
+        const data = userRoleDoc.data();
+        return data ? data.role : "user";
+    } else {
+        console.error("User has no role");
+        return "user";
+    }
+};
 
 const storeUser = async (
     /** @type {string} */ uid,
@@ -61,8 +70,9 @@ const readUser = async (/** @type {string} */ uid) => {
         console.log("No such document!");
         return null;
     } else {
-        console.log("Document data:", userDoc.data());
-        return userDoc.data();
+        const role = await readUserRole(uid);
+        console.log("Document data:", { ...userDoc.data(), role:role });
+        return { ...userDoc.data(), role:role };
     }
 };
 
@@ -88,7 +98,7 @@ const storeGame = async (
     /** @type {string} */ uid,
     /** @type {string} */ name,
     /** @type {string} */ url,
-    /** @type {boolean} */ isEmbeded,
+    /** @type {boolean} */ isEmbeded = false,
 ) => {
     try {
         await setDoc(doc(db, "games", gameId), {
