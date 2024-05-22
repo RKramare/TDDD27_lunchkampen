@@ -1,13 +1,20 @@
 import { app } from "./firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { user } from "./user.js";
-import { storeUser } from "./firestore.js";
+import { storeUser, readUser } from "./firestore.js";
 
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, (/** @type {any} */ firebaseUser) => {
+onAuthStateChanged(auth, async (firebaseUser) => {
+    console.log("User state changed", firebaseUser);
     if (firebaseUser) {
-        user.set(firebaseUser);
+        const userDoc = await readUser(firebaseUser.uid);
+        if (userDoc) {
+            user.set({...firebaseUser, ...userDoc});
+        } else {
+            console.error("User not found in Firestore");
+            user.set(firebaseUser);
+        }
     } else {
         user.set(null);
     }

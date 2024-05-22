@@ -1,6 +1,6 @@
 // import { writable } from 'svelte/store';
 import { app } from "./firebase.js";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc, getDocs, getDoc, doc } from "firebase/firestore";
 
 // Create a Firestore database object
 const db = getFirestore(app);
@@ -30,10 +30,12 @@ const readScores = async () => {
     const scores = [];
     const querySnapshot = await getDocs(collection(db, "scores"));
     querySnapshot.forEach((doc) => {
-    scores.push(doc.data());
+        scores.push(doc.data());
     });
     return scores;
 };
+
+
 
 const storeUser = async (
     /** @type {string} */ uid,
@@ -41,16 +43,78 @@ const storeUser = async (
     /** @type {string} */ name
 ) => {
     try {
-        const docRef = await addDoc(collection(db, "users"), {
+        await setDoc(doc(db, "users", uid), {
             uid: uid,
             email: email,
             name: name,
         });
-        console.log("Document written with ID: ", docRef.id);
+        console.log("User document written with ID: ", uid);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
 };
 
+const readUser = async (/** @type {string} */ uid) => {
+    // Get a single user
+    const userDoc = await getDoc(doc(db, "users", uid));
+    if (!userDoc.exists()) {
+        console.log("No such document!");
+        return null;
+    } else {
+        console.log("Document data:", userDoc.data());
+        return userDoc.data();
+    }
+};
+
+const promoteUser = async (
+        // Promote a user to a role
+        /** @type {string} */ uid,
+        /** @type {string} */ role,
+    ) => {
+    try {
+        
+        await setDoc(doc(db, "roles", uid), {
+            role: role,
+        });
+        console.log("User ", uid, " was promoted to: ", role);
+    } catch (e) {
+        console.error("Error promoting user: ", e);
+    }
+}
+
+const storeGame = async (
+    // Add a game to the database
+    /** @type {string} */ gameId,
+    /** @type {string} */ uid,
+    /** @type {string} */ name,
+    /** @type {string} */ url,
+    /** @type {boolean} */ isEmbeded,
+) => {
+    try {
+        await setDoc(doc(db, "games", gameId), {
+            uid: uid,
+            name: name,
+            url: url,
+            isEmbeded: isEmbeded,
+        });
+        console.log("Document written with ID: ", gameId);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+};
+
+const readGames = async () => {
+    // Get a list of games
+    /**
+     * @type {import("@firebase/firestore").DocumentData[]}
+     */
+    const games = [];
+    const querySnapshot = await getDocs(collection(db, "games"));
+    querySnapshot.forEach((doc) => {
+        games.push(doc.data());
+    });
+    return games;
+};
+
 // Export the function
-export { storeScores, readScores, storeUser };
+export { storeScores, readScores, storeUser, readUser, promoteUser, storeGame, readGames };
