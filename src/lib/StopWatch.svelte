@@ -37,8 +37,8 @@
 </script>
 
 <div class="variant-outline-surface flex items-center space-x-2 p-2 shadow">
-	<Icon src={OiStopwatch16} />
-	<p class="card variant-outline-primary p-2">
+	<p class="card variant-outline-primary flex items-center p-2">
+		<Icon src={OiStopwatch16} />
 		{$minutes.toString().padStart(2, '0')}:{$seconds.toString().padStart(2, '0')}
 	</p>
 	<button type="button" class="variant-outline-primary btn" on:click={startStopwatch}

@@ -2,15 +2,14 @@
 	import GameSelector from '$lib/GameSelector.svelte';
 	import Header from '$lib/Header.svelte';
 	import ScoreSubmit from '$lib/ScoreSubmit.svelte';
-	import { selectedGame } from '../../store';
-	import { gameInfo } from '../../tmp_db.js';
+	import { selectedGame, games, gamesLoading } from '../../store';
 
 	function openExternalPage() {
 		if (!$selectedGame) {
 			alert('Please select a game first');
 			return;
 		}
-		const externalUrl = gameInfo[$selectedGame].url;
+		const externalUrl = $games[$selectedGame]?.url;
 		// Calculate the position of the new window relative to the current window
 		const left = window.screenX + 100; // Adjust the left position as needed
 		const top = window.screenY + 100; // Adjust the top position as needed
@@ -23,19 +22,22 @@
 			`width=${newWidth},height=${newHeight},left=${left},top=${top}`
 		);
 	}
+	console.log('Från game page', $games, $selectedGame);
 </script>
 
 <Header />
 <GameSelector />
 
-{#if $selectedGame && gameInfo[$selectedGame].isEmbeded}
+{#if $gamesLoading}
+	<div>Loading...</div>
+{:else if $selectedGame && $games[$selectedGame]?.isEmbeded}
 	<div class="card variant-ringed-primary">
-		<iframe src={gameInfo[$selectedGame].url} frameborder="3" title={$selectedGame} />
+		<iframe src={$games[$selectedGame]?.url} frameborder="3" title={$selectedGame} />
 	</div>
 {:else if $selectedGame}
 	<div style="display: flex; justify-content: center; align-items: center;">
 		<button class="variant-ghost-primary justify-center rounded p-2" on:click={openExternalPage}
-			>Öppna {gameInfo[$selectedGame].name} i en ny flik</button
+			>Öppna {$games[$selectedGame]?.name} i en ny flik</button
 		>
 	</div>
 {/if}

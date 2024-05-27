@@ -121,7 +121,11 @@ const readGames = async () => {
     const games = [];
     const querySnapshot = await getDocs(collection(db, "games"));
     querySnapshot.forEach((doc) => {
-        games.push(doc.data());
+        const gameData = doc.data();
+        games.push({
+            ...gameData,
+            gameId: doc.id,
+        });
     });
     return games;
 };
